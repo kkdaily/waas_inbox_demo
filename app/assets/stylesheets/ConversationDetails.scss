@@ -1,0 +1,9 @@
+@import '_colors.scss';
+
+.ConversationDetails {
+  background-color: $snow !important;
+
+  #message-thread .Message:not(:first-child) {
+    border-top: 1px solid $grey;
+  }
+}

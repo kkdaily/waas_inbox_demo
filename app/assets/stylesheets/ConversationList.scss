@@ -1,0 +1,28 @@
+@import '_colors.scss';
+
+.ConversationList {
+  position: fixed !important;
+  top: 70px;
+  bottom: 0;
+  overflow: auto !important;
+  width: 100%;
+  max-width: 447px !important;
+
+  .highlight-conversation {
+    border-left: 8px solid $orange !important;
+  }
+
+  .loading-container {
+    border: 0;
+    background: transparent;
+  }
+
+  .list-group {
+    border: 0;
+
+    .list-group-item {
+      cursor: pointer;
+      background-color: $snow;
+    }
+  }
+}

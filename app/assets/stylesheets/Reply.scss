@@ -1,0 +1,15 @@
+@import '_colors.scss';
+
+.Reply {
+  .message-wrapper {
+    border: 1px solid $grey;
+    border-radius: 8px;
+    padding: 1rem;
+    background: $white;
+
+    .submit-btn {
+      background-color: $orange;
+      border-color: $orange;
+    }
+  }
+}

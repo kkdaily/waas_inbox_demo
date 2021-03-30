@@ -1,0 +1,13 @@
+@import '_colors.scss';
+
+.Inbox {
+  .searchbox {
+    position: sticky;
+    top: 0;
+  }
+
+  .conversation-details-wrapper {
+    background-color: $snow;
+    border-radius: 8px;
+  }
+}

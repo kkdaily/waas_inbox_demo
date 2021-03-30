@@ -1,0 +1,27 @@
+@import '_colors.scss';
+
+.CompanyDetails {
+  .back-btn {
+    i {
+      color: $black;
+    }
+    .link-text {
+      color: $black;
+    }
+  }
+
+  .company-name {
+    .website-url {
+      cursor: pointer;
+      color: $black;
+    }
+  }
+
+  .tags {
+    font-size: 20px;
+
+    .badge {
+      background-color: $grey;
+    }
+  }
+}

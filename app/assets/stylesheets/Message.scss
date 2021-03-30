@@ -1,0 +1,28 @@
+@import '_colors.scss';
+
+.Message {
+  .show-pointer-on-hover {
+    cursor: pointer;
+  }
+
+  .author-header {
+    color: $black;
+  }
+
+  .fallback-profile-img {
+    width: 55px;
+    height: 55px;
+    background-color: $orange;
+
+    .initials {
+      position: relative;
+      color: $white;
+      top: 17.5px;
+      left: 17.5px;
+    }
+  }
+
+  .message-content {
+    white-space: pre-wrap;
+  }
+}
