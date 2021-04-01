@@ -1,0 +1,24 @@
+@import '_colors.scss';
+
+.SignIn {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+
+  .form-signin {
+    width: 330px;
+    max-width: 330px;
+  }
+
+  .signin-btn {
+    background-color: $orange;
+    border-color: $orange;
+    color: $white;
+
+    &:hover {
+      background-color: $dark-orange;
+      border-color: $dark-orange;
+      color: $white;
+    }
+  }
+}
