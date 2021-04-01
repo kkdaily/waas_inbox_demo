@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-
-      # get 'messages', to: 'messages#index'
-      # get 'messages/users/:user_id', to: 'messages#show'
-      get 'conversations', to: 'conversations#index'
-      get 'conversations/:id', to: 'conversations#show'
+      get 'conversations', to: 'messages#index'
+      get 'conversations/:id', to: 'messages#show'
       post 'messages', to: 'messages#create'
 
       #get "login", to: "sessions#new"
