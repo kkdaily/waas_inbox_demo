@@ -5,3 +5,9 @@ body {
   font-weight: 200;
   background-color: $beige !important;
 }
+
+@media screen and (max-width: 992px) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
