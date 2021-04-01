@@ -29,7 +29,7 @@ function Navigation() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end" >
         <Nav>
-          <NavDropdown title={auth.user.first_name} id="basic-nav-dropdown" menuAlign="right">
+          <NavDropdown title={auth.user.first_name} id="basic-nav-dropdown">
             <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
           </NavDropdown>
         </Nav>
