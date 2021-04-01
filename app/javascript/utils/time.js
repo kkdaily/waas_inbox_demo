@@ -7,5 +7,8 @@ dayjs.extend(relativeTime);
 
 // i.e: '2 minutes ago'
 export function getRelativeTimeInWords(datetime) {
-  return dayjs().to(dayjs(dayjs.utc(datetime)));
+  const time = dayjs().to(dayjs(dayjs.utc(datetime)));
+
+  // change dayjs's default for recent times to 'seconds ago' to better fit text on mobile
+  return time === 'a few seconds ago' ? 'seconds ago' : time;
 };
