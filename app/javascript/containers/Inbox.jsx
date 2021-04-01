@@ -39,11 +39,11 @@ function Inbox() {
       const resp = await getConversations({ search: searchQuery, offset: conversations.length });
       const newConversations = [...conversations, ...resp.data];
       setConversations(newConversations);
+      setIsLoadingConversations(false);
     } catch (err) {
       // TODO: handle error
+      setIsLoadingConversations(false);
     }
-    
-    setIsLoadingConversations(false);
   };
   
   // when user presses "enter" in the messages search bar
@@ -55,18 +55,17 @@ function Inbox() {
 
   function renderSearchbox() {
     return (
-      <InputGroup 
-        className="searchbox" 
-        value={searchText} 
-        onChange={(ev) => setSearchText(ev.target.value)}
-        onKeyPress={onSearchKeyPress}
-      >
+      <InputGroup className="searchbox">
         <InputGroup.Prepend>
           <InputGroup.Text>
             <i className="fas fa-search"></i>
           </InputGroup.Text>
         </InputGroup.Prepend>
-        <FormControl className="shadow-none" placeholder="Search messages" aria-label="Search messages"/>
+        <FormControl 
+          className="searchbox" 
+          value={searchText} 
+          onChange={(ev) => setSearchText(ev.target.value)}
+          onKeyPress={onSearchKeyPress} className="shadow-none" placeholder="Search messages" aria-label="Search messages"/>
       </InputGroup>
     )
   };
@@ -82,8 +81,7 @@ function Inbox() {
             <ConversationList
               conversations={conversations} 
               onScrollBottom={loadMoreConversations} 
-              isLoading={isLoadingConversations} 
-              onSearch={setSearchQuery}
+              isLoading={isLoadingConversations}
             />
           </Route>
           <Route exact path="/conversations/:id">
@@ -104,8 +102,7 @@ function Inbox() {
                 <ConversationList 
                   conversations={conversations} 
                   onScrollBottom={loadMoreConversations} 
-                  isLoading={isLoadingConversations} 
-                  onSearch={setSearchQuery}
+                  isLoading={isLoadingConversations}
                 />
               </Col>
               <Col className="conversation-details-wrapper" lg={7} xl={7}>
