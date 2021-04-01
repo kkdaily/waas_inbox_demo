@@ -87,14 +87,18 @@ function Inbox() {
             />
           </Route>
           <Route exact path="/conversations/:id">
-            <ConversationDetails />
+            <Row>
+              <Col className="conversation-details-wrapper">
+                <ConversationDetails />
+              </Col>
+            </Row>
           </Route>
         </Switch>
       ) : (
         <Switch>
           {/* Desktop view */}
           <Route path="/conversations/:id">
-            <Row className="mx-0">
+            <Row>
               <Col lg={5} xl={5}>
                 {renderSearchbox()}
                 <ConversationList 

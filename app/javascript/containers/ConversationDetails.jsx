@@ -44,7 +44,7 @@ function ConversationDetails() {
   };
 
   return (
-    <Container className="ConversationDetails pb-5">
+    <Container className="ConversationDetails">
       {isErrorVisible ? (
         <Card className="text-center">
           <Card.Body>Sorry, we're unable to load this conversation. Please try again.</Card.Body>

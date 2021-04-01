@@ -9,13 +9,6 @@
   max-width: 447px !important;
   padding-left: 0px !important;
 
-  .searchbox {
-    position: fixed !important;
-    top: 76px !important;
-    width: 100% !important;
-    max-width: 432px !important;
-  }
-
   .highlight-conversation {
     border-left: 8px solid $orange !important;
   }
@@ -41,13 +34,5 @@
       left: 0;
       right: 0;
       padding-right: 0 !important;
-
-      .searchbox {
-        max-width: none !important;
-        left: 0 !important;
-        right: 0 !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-      }
     }
 }

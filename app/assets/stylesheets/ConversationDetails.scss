@@ -2,6 +2,7 @@
 
 .ConversationDetails {
   background-color: $snow !important;
+  padding-bottom: 30px;
 
   #message-thread .Message:not(:first-child) {
     border-top: 1px solid $grey;

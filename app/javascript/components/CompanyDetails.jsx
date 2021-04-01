@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 
 function CompanyDetails({ name, logo_url, website_url, batch, size, location, industry }) {
   return (
-    <div className="CompanyDetails mb-5">
+    <div className="CompanyDetails mb-5 pt-3">
       {/* Back button (appears only on small screens) */}
       <Nav className="back-btn d-lg-none">
         <Nav.Item>
