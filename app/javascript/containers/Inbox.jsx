@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,12 +7,11 @@ import { getConversations } from '../api/conversations';
 import useWindowSize from '../hooks/useWindowSize';
 import ConversationDetails from './ConversationDetails';
 import ConversationList from './ConversationList';
-//import '../styles/Inbox.scss';
+import Navigation from '../components/Navigation';
 
 function Inbox() {
   const TABLET_WIDTH = 992;
   const [conversations, setConversations] = useState([]);
-  const [searchText, setSearchText] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
   const size = useWindowSize();
@@ -39,37 +36,19 @@ function Inbox() {
     setIsLoadingConversations(false);
   };
 
-  // when user presses "enter" in the messages search bar
-  function onSearchKeyPress(ev) {
-    if (ev.key === 'Enter') {
-      setSearchQuery(searchText);
-    }
-  };
-
-  function renderSearchbox() {
-    return (
-      <InputGroup className="searchbox py-3" value={searchText} onChange={(ev) => setSearchText(ev.target.value)} onKeyPress={onSearchKeyPress}>
-        <InputGroup.Prepend>
-          <InputGroup.Text>
-            <i className="fas fa-search"></i>
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl
-          placeholder="Search messages"
-          aria-label="Search messages"
-        />
-      </InputGroup>
-    )
-  };
-
   return (
     <Container className="Inbox" fluid="md">
+      <Navigation />
+      {/* Mobile + Tablet view */}
       {size.width <= TABLET_WIDTH ? (
         <Switch>
-          {/* Mobile + Tablet view */}
           <Route exact path="/conversations">
-            {renderSearchbox()}
-            <ConversationList conversations={conversations} onScrollBottom={loadMoreConversations} isLoading={isLoadingConversations} />
+            <ConversationList
+              conversations={conversations} 
+              onScrollBottom={loadMoreConversations} 
+              isLoading={isLoadingConversations} 
+              onSearch={setSearchQuery}
+            />
           </Route>
           <Route exact path="/conversations/:id">
             <ConversationDetails />
@@ -80,9 +59,13 @@ function Inbox() {
           {/* Desktop view */}
           <Route path="/conversations/:id">
             <Row className="mx-0">
-              <Col md={5} lg={6} xl={5}>
-                {renderSearchbox()}
-                <ConversationList conversations={conversations} onScrollBottom={loadMoreConversations} isLoading={isLoadingConversations} />
+              <Col className="pl-0" md={5} lg={6} xl={5}>
+                <ConversationList 
+                  conversations={conversations} 
+                  onScrollBottom={loadMoreConversations} 
+                  isLoading={isLoadingConversations} 
+                  onSearch={setSearchQuery}
+                />
               </Col>
               <Col className="conversation-details-wrapper" md={7} lg={6} xl={7}>
                 <ConversationDetails />
