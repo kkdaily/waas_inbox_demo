@@ -10,7 +10,7 @@ class Api::V1::MessagesController < ApplicationController
     Founder.where(user_id: user_id).exists?
   end
 
-  # GET /messages
+  # GET /conversations
   def index
     user_id = session[:user_id]
     search = "%#{params[:search]}%"
@@ -92,7 +92,7 @@ class Api::V1::MessagesController < ApplicationController
     render json: @conversations
   end
 
-  # GET /messages/:user_id
+  # GET /conversations/:id
   def show
     user_id = session[:user_id]
     founder_id = params[:id]
