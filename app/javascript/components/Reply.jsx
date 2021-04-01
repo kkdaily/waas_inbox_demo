@@ -19,12 +19,17 @@ function Reply({ onSubmit, onSuccess }) {
 
   async function submit() {
     setIsErrorVisible(false);
-    const resp = await onSubmit(message);
 
-    if (resp) {
-      setMessage('');
-      onSuccess();
-    } else {
+    try {
+      const resp = await onSubmit(message);
+
+      if (resp.data) {
+        setMessage('');
+        onSuccess();
+      } else {
+        setIsErrorVisible(true);
+      }
+    } catch (err) {
       setIsErrorVisible(true);
     }
   };
@@ -46,7 +51,7 @@ function Reply({ onSubmit, onSuccess }) {
       </div>
       {isErrorVisible && (
         <div className="mt-2">
-          Unable to send message. Please try again later.
+          Unable to send message. Please try again.
         </div>
       )}
     </div>

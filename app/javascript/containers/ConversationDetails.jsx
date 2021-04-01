@@ -20,11 +20,17 @@ function ConversationDetails() {
 
   async function getConversationData(id) {
     setIsErrorVisible(false);
-    const resp = await getConversation({ id });
-    if (resp) {
-      setCompany(resp.company_data);
-      setMessages(resp.messages_data);
-    } else {
+
+    try {
+      const resp = await getConversation({ id });
+
+      if (resp.data) {
+        setCompany(resp.data.company_data);
+        setMessages(resp.data.messages_data);
+      } else {
+        setIsErrorVisible(true);
+      }
+    } catch (err) {
       setIsErrorVisible(true);
     }
   }

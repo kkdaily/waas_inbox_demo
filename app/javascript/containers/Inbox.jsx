@@ -19,8 +19,12 @@ function Inbox() {
   // fetch conversations matching the searchbox text
   useEffect(() => {
     async function fetchData() {
-      const data = await getConversations({ search: searchQuery });
-      setConversations(data);
+      try {
+        const resp = await getConversations({ search: searchQuery });
+        setConversations(resp.data);
+      } catch (err) {
+        // TODO: handle error
+      }
     }
     fetchData();
   }, [searchQuery]);
@@ -29,10 +33,14 @@ function Inbox() {
   async function loadMoreConversations() {
     setIsLoadingConversations(true);
 
-    const data = await getConversations({ search: searchQuery, offset: conversations.length });
-    const newConversations = [...conversations, ...data];
-
-    setConversations(newConversations);
+    try {
+      const resp = await getConversations({ search: searchQuery, offset: conversations.length });
+      const newConversations = [...conversations, ...resp.data];
+      setConversations(newConversations);
+    } catch (err) {
+      // TODO: handle error
+    }
+    
     setIsLoadingConversations(false);
   };
 
