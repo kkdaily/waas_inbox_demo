@@ -13,12 +13,13 @@
     width: 55px;
     height: 55px;
     background-color: $orange;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
     .initials {
-      position: relative;
       color: $white;
-      top: 17.5px;
-      left: 17.5px;
     }
   }
 

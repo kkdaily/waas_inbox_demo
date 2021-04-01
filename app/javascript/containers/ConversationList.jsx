@@ -30,16 +30,17 @@ function ConversationList({ conversations, onScrollBottom, isLoading, onSearch }
 
   function renderSearchbox() {
     return (
-      <InputGroup className="searchbox" value={searchText} onChange={(ev) => setSearchText(ev.target.value)} onKeyPress={onSearchKeyPress}>
+      <InputGroup 
+        className="searchbox" 
+        value={searchText} 
+        onChange={(ev) => setSearchText(ev.target.value)} 
+        onKeyPress={onSearchKeyPress}>
         <InputGroup.Prepend>
           <InputGroup.Text>
             <i class="fas fa-search"></i>
           </InputGroup.Text>
         </InputGroup.Prepend>
-        <FormControl
-          placeholder="Search messages"
-          aria-label="Search messages"
-        />
+        <FormControl className="shadow-none" placeholder="Search messages" aria-label="Search messages"/>
       </InputGroup>
     )
   };
