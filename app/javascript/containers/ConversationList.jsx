@@ -37,7 +37,7 @@ function ConversationList({ conversations, onScrollBottom, isLoading, onSearch }
         onKeyPress={onSearchKeyPress}>
         <InputGroup.Prepend>
           <InputGroup.Text>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </InputGroup.Text>
         </InputGroup.Prepend>
         <FormControl className="shadow-none" placeholder="Search messages" aria-label="Search messages"/>
