@@ -1,10 +1,19 @@
 import axios from 'axios';
+import { getCsrfToken } from '../utils/security';
 
-export const sendMessage = async ({ conversationId, content }) => {
+const BASE_URI = 'http://localhost:3001/api/v1';
+
+export const sendMessage = async ({ receiverId, content }) => {
+  const token = getCsrfToken();
+
   try {
-    const resp = await axios.post('http://localhost:3002/messages', {
-      conversation_id: conversationId,
-      content
+    const resp = await axios.post(`${BASE_URI}/messages`, {
+      content,
+      receiver_id: receiverId
+    }, {
+      headers: {
+        'X-CSRF-Token': token
+      }
     });
     return resp.data;
   } 
