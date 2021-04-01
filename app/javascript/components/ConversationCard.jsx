@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
-//import '../styles/ConversationCard.scss';
 import { getRelativeTimeInWords } from '../utils/time';
 
 function ConversationCard({ id, company_logo_url, company_name, last_message_sent_at, clipped_message }) {
