@@ -7,7 +7,6 @@ import { sendMessage } from '../api/messages';
 import CompanyDetails from '../components/CompanyDetails';
 import Message from '../components/Message';
 import Reply from '../components/Reply';
-//import '../styles/ConversationDetails.scss';
 
 function ConversationDetails() {
   let { id } = useParams();
@@ -39,7 +38,7 @@ function ConversationDetails() {
   };
 
   return (
-    <Container className="ConversationDetails">
+    <Container className="ConversationDetails pb-5">
       {isErrorVisible ? (
         <Card className="text-center">
           <Card.Body>Sorry, we're unable to load this conversation. Please try again.</Card.Body>
@@ -51,7 +50,7 @@ function ConversationDetails() {
             {renderMessages()}
           </div>
           <Reply 
-            onSubmit={(message) => sendMessage({ conversationId: id, content: message })} 
+            onSubmit={(message) => sendMessage({ receiverId: id, content: message })} 
             onSuccess={() => getConversationData(id)} 
           />
         </>
