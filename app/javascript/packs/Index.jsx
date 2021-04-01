@@ -7,13 +7,16 @@ import { render } from "react-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "../components/App";
 import { BrowserRouter as Router } from "react-router-dom";
+import ProvideAuth from "../components/ProvideAuth";
 
 document.addEventListener("DOMContentLoaded", () => {
   render(
     <React.StrictMode>
-      <Router>
-        <App />
-      </Router>
+      <ProvideAuth>
+        <Router>
+          <App />
+        </Router>
+      </ProvideAuth>
     </React.StrictMode>,
     document.body.appendChild(document.createElement("div"))
   );
