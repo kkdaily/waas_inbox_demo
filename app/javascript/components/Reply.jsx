@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-//import '../styles/Reply.scss';
+import Spinner from 'react-bootstrap/Spinner';
 
 function Reply({ onSubmit, onSuccess }) {
   const [message, setMessage] = useState('');
   const [isErrorVisible, setIsErrorVisible] = useState(false);
-  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // disables "send" button if there are no non-whitespace characters
     if (message.trim().length >= 1) {
-      setIsSubmitButtonDisabled(false);
+      setIsSubmitDisabled(false);
     } else {
-      setIsSubmitButtonDisabled(true);
+      setIsSubmitDisabled(true);
     }
   }, [message]);
 
   async function submit() {
     setIsErrorVisible(false);
+    setIsSubmitDisabled(true);
+    setIsLoading(true);
 
     try {
       const resp = await onSubmit(message);
@@ -29,8 +32,12 @@ function Reply({ onSubmit, onSuccess }) {
       } else {
         setIsErrorVisible(true);
       }
+      setIsSubmitDisabled(false);
+      setIsLoading(false);
     } catch (err) {
       setIsErrorVisible(true);
+      setIsSubmitDisabled(false);
+      setIsLoading(false);
     }
   };
 
@@ -43,9 +50,20 @@ function Reply({ onSubmit, onSuccess }) {
           </Form.Group>
         </Form>
         <div className="d-grid gap-2 text-right">
-          <Button className="submit-btn" disabled={isSubmitButtonDisabled} onClick={submit} variant="primary">
+          <Button className="submit-btn" disabled={isSubmitDisabled} onClick={submit} variant="orange">
             <span>Send</span>
-            <i className="ml-2 fas fa-paper-plane"></i>
+            {isLoading ? (
+              <Spinner
+                className="ml-2"
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : (
+              <i className="ml-2 fas fa-paper-plane"></i>
+            )}
           </Button>
         </div>
       </div>

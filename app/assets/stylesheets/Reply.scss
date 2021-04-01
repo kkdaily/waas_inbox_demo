@@ -8,8 +8,11 @@
     background: $white;
 
     .submit-btn {
+      display: inline-flex;
+      align-items: center;
       background-color: $orange;
       border-color: $orange;
+      color: $white;
     }
   }
 }
