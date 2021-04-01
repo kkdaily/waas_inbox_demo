@@ -105,10 +105,11 @@ class Api::V1::MessagesController < ApplicationController
         json_agg(
           json_build_object(
             'id', messages.id,
+            'sender_id', messages.sender_id,
             'content', messages.content,
-            'author_first_name', users.first_name,
-            'author_last_name', users.last_name,
-            'author_profile_image_url', users.profile_image_url,
+            'sender_first_name', users.first_name,
+            'sender_last_name', users.last_name,
+            'sender_profile_image_url', users.profile_image_url,
             'sent_at', messages.created_at
           ) 
           ORDER BY messages.created_at
