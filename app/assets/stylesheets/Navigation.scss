@@ -1,0 +1,11 @@
+@import '_colors.scss';
+
+.Navigation {
+  background-color: $beige;
+  max-width: 1140px !important;
+
+  .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+}
