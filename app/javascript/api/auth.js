@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { getCsrfToken } from '../utils/security';
 
-const BASE_URI = 'http://localhost:3001/api/v1';
+const BASE_URI = '/api/v1/sessions';
 
 export const signInUser = async ({ username, password }) => {
   const token = getCsrfToken();
 
-  return axios.post(`${BASE_URI}/sessions`, {
+  return axios.post(BASE_URI, {
     username,
     password
   }, {
@@ -14,12 +14,12 @@ export const signInUser = async ({ username, password }) => {
       'X-CSRF-Token': token
     }
   });
-}
+};
 
 export const logoutUser = async () => {
-  return axios.get(`${BASE_URI}/sessions`);
-}
+  return axios.get(BASE_URI);
+};
 
 export const getSession = async () => {
-  return axios.get(`${BASE_URI}/sessions/user`);
+  return axios.get(`${BASE_URI}/user`);
 };

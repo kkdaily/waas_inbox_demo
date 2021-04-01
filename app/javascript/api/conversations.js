@@ -1,24 +1,11 @@
 import axios from 'axios';
 
-const BASE_URI = 'http://localhost:3001/api/v1';
+const BASE_URI = '/api/v1/conversations';
 
 export const getConversations = async ({ search = '', offset = 0 }) => {
-  try {
-    const resp = await axios.get(`${BASE_URI}/conversations?search=${search}&offset=${offset}`);
-    return resp.data;
-  } 
-  catch (err) {
-    console.error(err);
-  }
-}
+  return axios.get(`${BASE_URI}?search=${search}&offset=${offset}`);
+};
 
 export const getConversation = async ({ id }) => {
-  try {
-    const resp = await axios.get(`${BASE_URI}/conversations/${id}`);
-    console.log('turtle')
-    return resp.data;
-  }
-  catch (err) {
-    console.error(err);
-  }
-}
+  return axios.get(`${BASE_URI}/${id}`);
+};
