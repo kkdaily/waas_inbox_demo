@@ -8,12 +8,10 @@ function CompanyDetails({ name, logo_url, website_url, batch, size, location, in
       {/* Back button (appears only on small screens) */}
       <Nav className="back-btn d-lg-none">
         <Nav.Item>
-          <Nav.Link>
-            <Link to="/conversations">
-              <i className="fas fa-arrow-left"></i>
-              <span className="link-text ml-2">Back to inbox</span>
-            </Link>
-          </Nav.Link>
+          <Link to="/conversations">
+            <i className="fas fa-arrow-left"></i>
+            <span className="link-text ml-2">Back to inbox</span>
+          </Link>
         </Nav.Item>
       </Nav>
 
