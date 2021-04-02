@@ -47,7 +47,7 @@ function Inbox() {
   };
 
   return (
-    <Container className="Inbox" fluid="xl">
+    <Container className="Inbox" fluid="sm">
       {/* Mobile + Tablet view */}
       {size.width <= DESKTOP_WIDTH ? (
         <Switch>
@@ -74,7 +74,7 @@ function Inbox() {
           <Route path="/conversations/:id">
             <Navigation />
             <Row>
-              <Col lg={5} xl={5}>
+              <Col lg={5} className="conversation-list-wrapper">
                 <SearchBox onSearch={setSearchQuery} />
                 <ConversationList 
                   conversations={conversations} 
@@ -82,7 +82,7 @@ function Inbox() {
                   isLoading={isLoadingConversations}
                 />
               </Col>
-              <Col className="conversation-details-wrapper" lg={7} xl={7}>
+              <Col className="conversation-details-wrapper" lg={7}>
                 <ConversationDetails />
               </Col>
             </Row>

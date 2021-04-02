@@ -18,7 +18,7 @@ function Navigation() {
   };
 
   return (
-    <Navbar className="Navigation m-auto pl-0">
+    <Navbar className="Navigation m-auto">
       <Navbar.Brand>
         <img
           src="https://waas-inbox-demo.s3.amazonaws.com/logo.svg"

@@ -16,6 +16,26 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .Inbox {
+    .conversation-details-wrapper {
+      margin-left: 460px !important;
+    }
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 992px) {
+  .Inbox {
+    .conversation-details-wrapper {
+      left: 25px;
+      margin-left: 400px !important;
+    }
+    .conversation-list-wrapper {
+      right: 35px !important;
+    }
+  }
+}
+
 @media screen and (max-width: 992px) {
   .Inbox {
     .searchbox {
