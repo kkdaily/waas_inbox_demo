@@ -6,11 +6,13 @@ import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import useVisibilitySensor from "@rooks/use-visibility-sensor"
 import ConversationCard from '../components/ConversationCard';
+import useWindowSize from '../hooks/useWindowSize';
 
 function ConversationList({ conversations, onScrollBottom, isLoading }) {
   let { id } = useParams();
   const loadingEl = useRef(null);
   const { isVisible } = useVisibilitySensor(loadingEl, { intervalCheck: true });
+  const size = useWindowSize();
 
   // when user scrolls to the bottom of the conversation list
   useEffect(() => {
@@ -18,6 +20,18 @@ function ConversationList({ conversations, onScrollBottom, isLoading }) {
       onScrollBottom();
     }
   }, [isVisible]);
+
+  // fix mobile Safari scroll bug with fixed elements
+  useEffect(() => {
+    if (size.width <= 992) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // cleanup
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [size])
 
   function renderInboxCards() {
     return conversations.map((conversation) => {
