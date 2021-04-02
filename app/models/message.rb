@@ -5,17 +5,4 @@ class Message < ApplicationRecord
   validates :content, presence: true, length: { minimum: 1 }
   validates :receiver_id, presence: true
   validates :sender_id, presence: true
-
-  scope :sent_by, -> (user_id) {
-    joins(:users).where(messages: {
-      sender_id: user_id
-    })
-  }
-
-  scope :received_by, -> (user_id) {
-    joins(:users).where(messages: {
-      receiver_id: user_id
-    })
-  }
-
 end
