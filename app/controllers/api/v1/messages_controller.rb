@@ -1,6 +1,5 @@
 class Api::V1::MessagesController < ApplicationController
-  # include ActionController::HttpAuthentication::Basic::ControllerMethods
-  # http_basic_authenticate_with name: "dhh", password: "secret"
+  before_action :authorized
 
   def is_candidate(user_id)
     Candidate.where(user_id: user_id).exists?
