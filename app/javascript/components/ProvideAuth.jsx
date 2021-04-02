@@ -9,6 +9,6 @@ function ProvideAuth({ children }) {
       {children}
     </authContext.Provider>
   );
-}
+};
 
 export default ProvideAuth;

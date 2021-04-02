@@ -16,30 +16,22 @@ function Message({ id, sender_id, sender_profile_image_url, sender_first_name, s
     }
   };
 
-  function renderAuthorProfileImage() {
-    if (sender_profile_image_url) {
-      // render sender's profile image if exists
-      return (
-        <img className="rounded-circle float-left mr-3" width="55" src={sender_profile_image_url} alt="profile" />
-      )
-    } else {
-      // render fallback image using sender's initials
-      const initials = sender_first_name.charAt(0) + sender_last_name.charAt(0);
-      return (
-        <div className="fallback-profile-img mr-3 float-left rounded-circle">
-          <strong className="initials font-weight-bold">
-            {initials}
-          </strong>
-        </div>
-      )
-    }
-  };
-
   return (
     <div key={id} className="Message">
       <div className="py-3" onClick={openMessage}>
         
-        {renderAuthorProfileImage()}
+        {/* Author profile image */}
+        {sender_profile_image_url ? (
+          // render sender's profile image if exists
+          <img className="rounded-circle float-left mr-3" width="55" src={sender_profile_image_url} alt="profile" />
+        ) : (
+          // render fallback image using sender's initials
+          <div className="fallback-profile-img mr-3 float-left rounded-circle">
+            <strong className="initials font-weight-bold">
+              {sender_first_name.charAt(0) + sender_last_name.charAt(0)}
+            </strong>
+          </div>
+        )}
 
         {/* Author and message details */}
         <div className={"sender-header text-decoration-none " + (isCollapsible ? 'show-pointer-on-hover' : '')}>
@@ -48,7 +40,7 @@ function Message({ id, sender_id, sender_profile_image_url, sender_first_name, s
             <small>{getRelativeTimeInWords(sent_at)}</small>
           </div>
           {/* show truncated message as a preview */}
-          <div className={"text-muted overflow-hidden text-nowrap text-truncate "}>
+          <div className={"text-muted overflow-hidden text-nowrap text-truncate"}>
             {/* show "you" if the logged in user is the sender of the message. Otherwise, show "to me" */}
             {isOpen ? messageTo : content }
           </div>

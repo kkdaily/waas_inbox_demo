@@ -18,7 +18,7 @@ function ConversationDetails() {
     getConversationData(id);
 
     // cleanup
-    return () => { isMounted = false };
+    return () => isMounted = false;
   }, [id]);
 
   async function getConversationData(id) {

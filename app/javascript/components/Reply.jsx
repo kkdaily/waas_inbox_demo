@@ -46,7 +46,12 @@ function Reply({ onSubmit, onSuccess }) {
       <div className="message-wrapper">
         <Form>
           <Form.Group>
-            <Form.Control className="border-0 shadow-none" placeholder="Write a message..." as="textarea" rows={4} onChange={(ev) => setMessage(ev.target.value)} value={message} />
+            <Form.Control 
+              className="border-0 shadow-none" 
+              placeholder="Write a message..." 
+              as="textarea" 
+              rows={4} 
+              onChange={(ev) => setMessage(ev.target.value)} value={message} />
           </Form.Group>
         </Form>
         <div className="d-grid gap-2 text-right">
@@ -73,7 +78,7 @@ function Reply({ onSubmit, onSuccess }) {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Reply;

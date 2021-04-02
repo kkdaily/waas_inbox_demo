@@ -4,4 +4,4 @@ export const authContext = createContext();
 
 export function useAuth() {
   return useContext(authContext);
-}
+};

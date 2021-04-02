@@ -15,7 +15,7 @@ function Navigation() {
     } catch(err) {
       console.error(err);
     }
-  }
+  };
 
   return (
     <Navbar className="Navigation m-auto pl-0">
@@ -37,7 +37,7 @@ function Navigation() {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  )
-}
+  );
+};
 
 export default Navigation;
