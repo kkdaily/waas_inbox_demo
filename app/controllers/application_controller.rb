@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :logged_in?, :current_user
+  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
   def current_user
     if session[:user_id]
@@ -7,12 +7,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def login!
+    session[:user_id] = @user.id
+  end
+
   def logged_in?
-    !!current_user
+    !!session[:user_id]
+  end
+
+  def logout!
+    session.clear
+  end
+
+  def authorized_user?
+    @user == current_user
   end
 
   def authorized
-    redirect_to login_path unless logged_in?
+    render json: {
+      status: 401,
+      errors: ['Unauthorized. Please login.']
+    } unless logged_in?
   end
 
 end
