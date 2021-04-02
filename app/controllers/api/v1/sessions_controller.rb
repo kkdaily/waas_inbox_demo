@@ -9,8 +9,7 @@ class Api::V1::SessionsController < ApplicationController
         logged_in: true,
         user: @user
       }
-    else  
-      puts "failed to login!"
+    else
       render json: {
         status: 401,
         errors: ['Invalid username or password.']
@@ -27,7 +26,7 @@ class Api::V1::SessionsController < ApplicationController
     else
       render json: {
         logged_in: false,
-        message: 'no such user'
+        message: 'User not found.'
       }
     end
   end
