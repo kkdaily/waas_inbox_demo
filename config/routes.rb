@@ -5,10 +5,9 @@ Rails.application.routes.draw do
       get 'conversations/:id', to: 'messages#show'
       post 'messages', to: 'messages#create'
 
-      #get "login", to: "sessions#new"
-      post "sessions", to: "sessions#create"
-      get "sessions", to: "sessions#destroy"
-      get "sessions/user", to: "sessions#show"
+      post 'login', to: 'sessions#create'
+      delete 'logout', to: 'sessions#destroy'
+      get 'logged_in', to: 'sessions#is_logged_in?'
     end
   end
 
