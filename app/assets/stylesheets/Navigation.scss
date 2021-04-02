@@ -1,11 +1,20 @@
 @import '_colors.scss';
 
 .Navigation {
+  z-index: 100;
+  position: fixed !important;
   background-color: $beige;
   max-width: 1140px !important;
+  width: 100%;
 
   .dropdown-menu {
     left: auto;
     right: 0;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .Navigation {
+    position: absolute;
   }
 }

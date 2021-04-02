@@ -16,7 +16,7 @@ function Navigation() {
   }
 
   return (
-    <Navbar className="Navigation m-auto" fixed="top">
+    <Navbar className="Navigation m-auto pl-0">
       <Navbar.Brand>
         <img
           src="https://www.workatastartup.com/assets/waas/ycombinator-logo-b603b0a270e12b1d42b7cca9d4527a9b206adf8293a77f9f3e8b6cb542fcbfa7.png"
