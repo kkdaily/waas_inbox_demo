@@ -1,21 +1,17 @@
 import { useState } from "react";
 
 export function useProvideAuth() {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [user, setUser] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  function updateUser(userObj) {
-    if (userObj) {
-
-      localStorage.setItem('user', JSON.stringify(userObj));
-      setUser(userObj);
-    } else {
-      localStorage.removeItem('user');
-      setUser(null);
-    }
-  }
+  const update = (data) => {
+    setUser(data.user);
+    setIsLoggedIn(data.isLoggedIn);
+  };
 
   return {
+    isLoggedIn,
     user,
-    updateUser
+    update
   };
-}
+};
