@@ -19,7 +19,7 @@
 @media screen and (max-width: 992px) {
   .Inbox {
     .searchbox {
-      position: absolute !important;
+      position: fixed !important;
       max-width: none !important;
       left: 0 !important;
       right: 0 !important;
