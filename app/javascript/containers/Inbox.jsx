@@ -9,9 +9,9 @@ import ConversationDetails from './ConversationDetails';
 import ConversationList from './ConversationList';
 import Navigation from '../components/Navigation';
 import { FormControl, InputGroup } from 'react-bootstrap';
+import { DESKTOP_WIDTH } from '../enums/screenWidth';
 
 function Inbox() {
-  const TABLET_WIDTH = 992;
   const [conversations, setConversations] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
@@ -25,7 +25,7 @@ function Inbox() {
         const resp = await getConversations({ search: searchQuery });
         setConversations(resp.data);
       } catch (err) {
-        // TODO: handle error
+        console.error(err);
       }
     }
     fetchData();
@@ -41,7 +41,7 @@ function Inbox() {
       setConversations(newConversations);
       setIsLoadingConversations(false);
     } catch (err) {
-      // TODO: handle error
+      console.error(err);
       setIsLoadingConversations(false);
     }
   };
@@ -73,7 +73,7 @@ function Inbox() {
   return (
     <Container className="Inbox" fluid="xl">
       {/* Mobile + Tablet view */}
-      {size.width <= TABLET_WIDTH ? (
+      {size.width < DESKTOP_WIDTH ? (
         <Switch>
           <Route exact path="/conversations">
             <Navigation />

@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import useVisibilitySensor from "@rooks/use-visibility-sensor"
 import ConversationCard from '../components/ConversationCard';
 import useWindowSize from '../hooks/useWindowSize';
+import { DESKTOP_WIDTH } from '../enums/screenWidth';
 
 function ConversationList({ conversations, onScrollBottom, isLoading }) {
   let { id } = useParams();
@@ -23,7 +24,7 @@ function ConversationList({ conversations, onScrollBottom, isLoading }) {
 
   // fix mobile Safari scroll bug with fixed elements
   useEffect(() => {
-    if (size.width <= 992) {
+    if (size.width < DESKTOP_WIDTH) {
       document.body.classList.add('overflow-hidden');
     } else {
       document.body.classList.remove('overflow-hidden');
@@ -31,7 +32,7 @@ function ConversationList({ conversations, onScrollBottom, isLoading }) {
 
     // cleanup
     return () => document.body.classList.remove('overflow-hidden');
-  }, [size])
+  }, [size]);
 
   function renderInboxCards() {
     return conversations.map((conversation) => {
