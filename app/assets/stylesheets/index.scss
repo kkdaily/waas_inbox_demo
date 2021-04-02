@@ -8,6 +8,6 @@ body {
 
 @media screen and (max-width: 992px) {
   body {
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 }
