@@ -8,31 +8,31 @@ import useWindowSize from '../hooks/useWindowSize';
 import ConversationDetails from './ConversationDetails';
 import ConversationList from './ConversationList';
 import Navigation from '../components/Navigation';
-import { FormControl, InputGroup } from 'react-bootstrap';
 import { DESKTOP_WIDTH } from '../enums/screenWidth';
+import SearchBox from '../components/SearchBox';
 
 function Inbox() {
   const [conversations, setConversations] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
-  const [searchText, setSearchText] = useState('');
   const size = useWindowSize();
 
   // fetch conversations matching the searchbox text
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const resp = await getConversations({ search: searchQuery });
-        setConversations(resp.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchData();
+    getInitialConversations();
   }, [searchQuery]);
 
-  // fetch additional conversations and append to existing state
-  async function loadMoreConversations() {
+  async function getInitialConversations() {
+    try {
+      const resp = await getConversations({ search: searchQuery });
+      setConversations(resp.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // fetch additional conversations via infinite scrolling and append to existing state
+  async function getMoreConversations() {
     setIsLoadingConversations(true);
 
     try {
@@ -45,42 +45,18 @@ function Inbox() {
       setIsLoadingConversations(false);
     }
   };
-  
-  // when user presses "enter" in the messages search bar
-  function onSearchKeyPress(ev) {
-    if (ev.key === 'Enter') {
-      setSearchQuery(searchText);
-    }
-  };
-
-  function renderSearchbox() {
-    return (
-      <InputGroup className="searchbox">
-        <InputGroup.Prepend>
-          <InputGroup.Text>
-            <i className="fas fa-search"></i>
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl 
-          className="searchbox" 
-          value={searchText} 
-          onChange={(ev) => setSearchText(ev.target.value)}
-          onKeyPress={onSearchKeyPress} className="shadow-none" placeholder="Search messages" aria-label="Search messages"/>
-      </InputGroup>
-    )
-  };
 
   return (
     <Container className="Inbox" fluid="xl">
       {/* Mobile + Tablet view */}
-      {size.width < DESKTOP_WIDTH ? (
+      {size.width <= DESKTOP_WIDTH ? (
         <Switch>
           <Route exact path="/conversations">
             <Navigation />
-            {renderSearchbox()}
+            <SearchBox onSearch={setSearchQuery} />
             <ConversationList 
               conversations={conversations} 
-              onScrollBottom={loadMoreConversations} 
+              onScrollBottom={getMoreConversations} 
               isLoading={isLoadingConversations}
             />
           </Route>
@@ -99,10 +75,10 @@ function Inbox() {
             <Navigation />
             <Row>
               <Col lg={5} xl={5}>
-                {renderSearchbox()}
+                <SearchBox onSearch={setSearchQuery} />
                 <ConversationList 
                   conversations={conversations} 
-                  onScrollBottom={loadMoreConversations} 
+                  onScrollBottom={getMoreConversations} 
                   isLoading={isLoadingConversations}
                 />
               </Col>
