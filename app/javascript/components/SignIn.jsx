@@ -42,7 +42,7 @@ function SignIn() {
   return (
     <Container className="SignIn text-center">
       <Form className="form-signin m-auto">
-        <Image className="mb-4" src="/assets/logo.svg" alt="" width="72" height="72" rounded />
+        <Image className="mb-4" src="https://waas-inbox-demo.s3.amazonaws.com/logo.svg" alt="" width="72" height="72" rounded />
         
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 

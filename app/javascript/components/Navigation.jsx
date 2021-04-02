@@ -21,7 +21,7 @@ function Navigation() {
     <Navbar className="Navigation m-auto pl-0">
       <Navbar.Brand>
         <img
-          src="/assets/logo.svg"
+          src="https://waas-inbox-demo.s3.amazonaws.com/logo.svg"
           width="50"
           height="50"
           className="d-inline-block align-top"
