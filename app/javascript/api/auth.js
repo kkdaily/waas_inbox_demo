@@ -1,25 +1,35 @@
 import axios from 'axios';
 import { getCsrfToken } from '../utils/security';
 
-const BASE_URI = '/api/v1/sessions';
+const BASE_URI = '/api/v1';
 
-export const signInUser = async ({ username, password }) => {
+export const login = async ({ username, password }) => {
   const token = getCsrfToken();
 
-  return axios.post(BASE_URI, {
+  return axios.post(`${BASE_URI}/login`, {
     username,
     password
   }, {
+    withCredentials: true,
     headers: {
       'X-CSRF-Token': token
     }
   });
 };
 
-export const logoutUser = async () => {
-  return axios.get(BASE_URI);
+export const logout = async () => {
+  const token = getCsrfToken();
+
+  return axios.delete(`${BASE_URI}/logout`, {
+    withCredentials: true,
+    headers: {
+      'X-CSRF-Token': token
+    }
+  });
 };
 
-export const getSession = async () => {
-  return axios.get(`${BASE_URI}/user`);
+export const loginStatus = async () => {
+  return axios.get(`${BASE_URI}/logged_in`, {
+    withCredentials: true,
+  });
 };
