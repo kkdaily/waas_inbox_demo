@@ -6,16 +6,40 @@ class Api::V1::SessionsController < ApplicationController
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      puts "logged in!"
-      render json: @user, status: :created
-      #redirect_to homepage
-      #redirect_to @user
+
+      render json: {
+        logged_in: true,
+        user: @user
+      }
     else  
       puts "failed to login!"
-      #render json: @user, status: :unprocessable_entity
-      #redirect '/fail'
-      #redirect_to login_path
+      render json: {
+        status: 401,
+        errors: ['Invalid username or password.']
+      }
     end
+  end
+
+  def is_logged_in?
+    if logged_in? && current_user
+      render json: {
+        logged_in: true,
+        user: current_user
+      }
+    else
+      render json: {
+        logged_in: false,
+        message: 'no such user'
+      }
+    end
+  end
+
+  def destroy
+    logout!
+    render json: {
+      status: 200,
+      logged_out: true
+    }
   end
 
   def show
@@ -23,8 +47,10 @@ class Api::V1::SessionsController < ApplicationController
     render json: @user, status: :ok
   end
 
-  def destroy
-    session[:user_id] = nil
+  private
+
+  def session_params
+    params.require(:user).permit(:username, :password)
   end
 
 end
