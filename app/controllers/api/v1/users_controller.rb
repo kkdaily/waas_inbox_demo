@@ -1,8 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  #before_action :set_user, only: [:show, :update, :destroy]
-  before_action :authorized, only: [:show]
-
-  
+  before_action :authorized
 
   # GET /users
   def index
@@ -41,20 +38,14 @@ class Api::V1::UsersController < ApplicationController
     @user.destroy
   end
 
-
-
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_user
       @user = User.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    # def user_params
-    #   params.fetch(:user, {})
-    # end
-
     def user_params
       params.require(:user).permit(:username, :password)
     end
+
 end
