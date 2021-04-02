@@ -12,28 +12,27 @@ function ConversationDetails() {
   let { id } = useParams();
   const [messages, setMessages] = useState([]);
   const [company, setCompany] = useState({});
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  let isMounted = true;
 
   useEffect(() => {
     getConversationData(id);
+
+    // cleanup
+    return () => { isMounted = false };
   }, [id]);
 
   async function getConversationData(id) {
-    setIsErrorVisible(false);
-
     try {
       const resp = await getConversation({ id });
 
-      if (resp.data) {
-        setCompany(resp.data.company_data);
-        setMessages(resp.data.messages_data);
-      } else {
-        setIsErrorVisible(true);
+      if (isMounted && resp.data) {
+        setCompany(resp.data.company_data || {});
+        setMessages(resp.data.messages_data || []);
       }
     } catch (err) {
-      setIsErrorVisible(true);
+      console.error(err);
     }
-  }
+  };
 
   function renderMessages() {
     return messages.map((message, index) => {
@@ -45,7 +44,7 @@ function ConversationDetails() {
 
   return (
     <Container className="ConversationDetails">
-      {isErrorVisible ? (
+      {!messages.length ? (
         <Card className="text-center">
           <Card.Body>Sorry, we're unable to load this conversation. Please try again.</Card.Body>
         </Card>
