@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router';
 import { getConversation } from '../api/conversations';
 import { sendMessage } from '../api/messages';
@@ -45,9 +46,11 @@ function ConversationDetails() {
   return (
     <Container className="ConversationDetails">
       {!messages.length ? (
-        <Card className="text-center">
-          <Card.Body>Sorry, we're unable to load this conversation. Please try again.</Card.Body>
-        </Card>
+        <div className="text-center pt-4">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
       ) : (
         <>
           <CompanyDetails {...company} />
