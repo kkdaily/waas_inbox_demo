@@ -44,7 +44,7 @@ users = User.create([
   { first_name: 'Polly', last_name: 'Weir', username: 'pweir', password: 'password', profile_image_url: nil },
   { first_name: 'Meerab', last_name: 'Compton', username: 'mcompton', password: 'password', profile_image_url: nil },
   { first_name: 'Ellen', last_name: 'Chang', username: 'echang', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/90.jpg' },
-  { first_name: 'Ioana', last_name: 'Irvine', username: 'iirvine', password: 'password', profile_image_url: nil },
+  { first_name: 'Ioana', last_name: 'Irvine', username: 'iirvine', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/36.jpg' },
 
   # candidates
   { first_name: 'Ruby', last_name: 'Smith', username: 'rsmith', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/47.jpg' },
