@@ -257,22 +257,22 @@ George
 ]
 
 messages = Message.create([
-  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[0] },
-  { sender_id: users[11].id, receiver_id: users[0].id, content: messages_content[1] },
-  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[2] },
+  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[0], created_at: 2.days.ago },
+  { sender_id: users[11].id, receiver_id: users[0].id, content: messages_content[1], created_at: 1.day.ago },
+  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[2], created_at: 12.seconds.ago },
 
-  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[3] },
-  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[4] },
+  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[3], created_at: 4.days.ago },
+  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[4], created_at: 1.month.ago },
+  { sender_id: users[11].id, receiver_id: users[1].id, content: messages_content[5], created_at: 22.days.ago },
 
-  { sender_id: users[11].id, receiver_id: users[1].id, content: messages_content[5] },
-  { sender_id: users[2].id, receiver_id: users[11].id, content: messages_content[6] },
-  { sender_id: users[3].id, receiver_id: users[11].id, content: messages_content[7] },
-  { sender_id: users[4].id, receiver_id: users[11].id, content: messages_content[8] },
-  { sender_id: users[5].id, receiver_id: users[11].id, content: messages_content[9] },
-  { sender_id: users[6].id, receiver_id: users[11].id, content: messages_content[10] },
-  { sender_id: users[7].id, receiver_id: users[11].id, content: messages_content[11] },
-  { sender_id: users[8].id, receiver_id: users[11].id, content: messages_content[12] },
-  { sender_id: users[9].id, receiver_id: users[11].id, content: messages_content[13] },
-  { sender_id: users[10].id, receiver_id: users[11].id, content: messages_content[14] },
-  { sender_id: users[12].id, receiver_id: users[0].id, content: messages_content[15] },
+  { sender_id: users[2].id, receiver_id: users[11].id, content: messages_content[6], created_at: 10.days.ago },
+  { sender_id: users[3].id, receiver_id: users[11].id, content: messages_content[7], created_at: 5.minutes.ago },
+  { sender_id: users[4].id, receiver_id: users[11].id, content: messages_content[8], created_at: 4.days.ago },
+  { sender_id: users[5].id, receiver_id: users[11].id, content: messages_content[9], created_at: 7.days.ago },
+  { sender_id: users[6].id, receiver_id: users[11].id, content: messages_content[10], created_at: 1.day.ago },
+  { sender_id: users[7].id, receiver_id: users[11].id, content: messages_content[11], created_at: 2.days.ago },
+  { sender_id: users[8].id, receiver_id: users[11].id, content: messages_content[12], created_at: 3.days.ago },
+  { sender_id: users[9].id, receiver_id: users[11].id, content: messages_content[13], created_at: 9.days.ago },
+  { sender_id: users[10].id, receiver_id: users[11].id, content: messages_content[14], created_at: 30.minutes.ago },
+  { sender_id: users[12].id, receiver_id: users[0].id, content: messages_content[15], created_at: 3.hours.ago },
 ])
