@@ -29,6 +29,11 @@ You'll need the following dependencies installed on your machine
 - [Rails](https://guides.rubyonrails.org/getting_started.html) 6.0.0 or later
 - [PostgreSQL](https://www.postgresql.org/) 10.0 or later
 
+### Install dependencies
+```
+$ bundle install
+```
+
 ### Configure the database
 Edit `config/database.yml` and update the `username` and `password` under the `default` section with your PostgreSQL user.
 
