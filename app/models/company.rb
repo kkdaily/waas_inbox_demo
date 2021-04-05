@@ -9,6 +9,4 @@ class Company < ApplicationRecord
   validates :location, presence: true
   validates :size, presence: true
   validates :batch, presence: true
-
-  
 end
