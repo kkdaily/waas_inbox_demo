@@ -49,7 +49,7 @@ function Inbox() {
   return (
     <Container className="Inbox" fluid="sm">
       {/* Mobile + Tablet view */}
-      {size.width <= DESKTOP_WIDTH ? (
+      {size.width < DESKTOP_WIDTH ? (
         <Switch>
           <Route exact path="/conversations">
             <Navigation />
