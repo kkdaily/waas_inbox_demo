@@ -1,159 +1,120 @@
 class Api::V1::MessagesController < ApplicationController
   before_action :authorized
 
-  def is_candidate(user_id)
-    Candidate.where(user_id: user_id).exists?
+  def is_founder?(user_id)
+    Founder.where(user_id: user_id).exists?
   end
 
-  def is_founder(user_id)
-    Founder.where(user_id: user_id).exists?
+  def is_candidate?(user_id)
+    Candidate.where(user_id: user_id).exists?
   end
 
   # GET /conversations
   def index
     user_id = session[:user_id]
-    search = "%#{params[:search]}%"
+    search = params[:search]
     offset = params[:offset]
+    is_candidate = is_candidate?(user_id)
+     
+    # get all messages where the current user has sent or received
+    tables = Message.joins("
+      INNER JOIN founders 
+      ON (founders.user_id = messages.sender_id OR founders.user_id = messages.receiver_id)
+    ")
+    .joins("
+      INNER JOIN companies 
+      ON companies.id = founders.company_id
+    ")
+    .joins("
+      INNER JOIN candidates
+      ON (candidates.user_id = messages.sender_id OR candidates.user_id = messages.receiver_id)
+    ")
+    .joins("
+      INNER JOIN users
+      ON candidates.user_id = users.id
+    ")
+  
+    # get all messages where the current user was either the sender or receiver
+    user_messages = tables.where(sender_id: user_id)
+      .or(tables.where(receiver_id: user_id))
 
-    if is_candidate(user_id)
+    # filter messages by query text
+    filtered_messages = user_messages.filter_by_company_name(search)
+      .or(user_messages.filter_by_content(search))
 
-      # get all conversations where the candidate has either sent/received the message
-      # ordered by when the most recent message in the conversation was sent at,
-      # grouped by founder
-      @conversations = Message.find_by_sql(["
-        SELECT 
-        LEFT(m.content, 30) as clipped_message, comp.logo_url as profile_image_url, 
-            comp.name as name, m.created_at as last_message_sent_at, f.user_id as id
-        FROM messages as m
-
-        INNER JOIN founders AS f 
-        ON (f.user_id = m.sender_id OR f.user_id = m.receiver_id)
-        INNER JOIN companies as comp 
-        ON comp.id = f.company_id
-
-        WHERE m.created_at IN
-        (
-          SELECT MAX(m.created_at)
-          FROM messages AS m
-          INNER JOIN founders AS f 
-          ON (f.user_id = m.sender_id OR f.user_id = m.receiver_id)
-          INNER JOIN companies as comp 
-          ON comp.id = f.company_id
-          WHERE (m.receiver_id = :user_id OR m.sender_id = :user_id)
-          AND (comp.name ILIKE :search OR m.content ILIKE :search)
-          GROUP BY f.user_id
-          LIMIT 10
-          OFFSET :offset
-        ) 
-        ORDER BY m.created_at DESC
-      ", {
-        :user_id => user_id,
-        :search => search,
-        :offset => offset
-      }])
-
+    if is_candidate
+      # group most recent messages by founder
+      grouped_messages = filtered_messages.most_recent.group('founders.user_id')
     else
-      # get all conversations where the founder has either sent/received the message
-      # ordered by when the most recent message in the conversation was sent at,
-      # grouped by candidate
-      @conversations = Message.find_by_sql(["
-        SELECT 
-        LEFT(m.content, 30) as clipped_message, u.profile_image_url, CONCAT(u.first_name, ' ', u.last_name) as name, 
-        m.created_at as last_message_sent_at, can.user_id as id
-        FROM messages as m
+      # group most recent messages by candidate
+      grouped_messages = filtered_messages.most_recent.group('candidates.user_id')
+    end
 
-        INNER JOIN founders AS f 
-        ON (f.user_id = m.sender_id OR f.user_id = m.receiver_id)
-        INNER JOIN companies as comp 
-        ON comp.id = f.company_id
-        INNER JOIN candidates AS can
-        ON (can.user_id = m.sender_id OR can.user_id = m.receiver_id)
-        INNER JOIN users AS u
-        ON can.user_id = u.id
+    # get 10 messages at a time starting at offset
+    paginated_messages = grouped_messages.limit(10).offset(offset)
 
-        WHERE m.created_at IN
-        (
-          SELECT MAX(m.created_at)
-          FROM messages AS m
-          INNER JOIN candidates AS can
-          ON (can.user_id = m.sender_id OR can.user_id = m.receiver_id)
-          INNER JOIN users AS u
-          ON can.user_id = u.id
-          INNER JOIN founders AS f 
-          ON (f.user_id = m.sender_id OR f.user_id = m.receiver_id)
-          INNER JOIN companies as comp 
-          ON comp.id = f.company_id
-          WHERE (m.receiver_id = :user_id OR m.sender_id = :user_id)
-          AND (u.first_name ILIKE :search OR u.last_name ILIKE :search OR m.content ILIKE :search)
-          GROUP BY can.user_id
-          LIMIT 10
-          OFFSET :offset
-        ) 
-        ORDER BY m.created_at DESC
-      ", {
-        :user_id => user_id,
-        :search => search,
-        :offset => offset
-      }])
+    # get most recent message for each conversation between the current user and the founder
+    latest_messages = tables.where(created_at: paginated_messages
+      .pluck('MAX(messages.created_at)'))
+      .order(last_message_sent_at: :desc)
+    
+    if is_candidate
+      @conversations = latest_messages.select("
+        LEFT(messages.content, 30) as clipped_message, companies.logo_url as profile_image_url, 
+        companies.name as name, messages.created_at as last_message_sent_at, founders.user_id as id
+      ")
+    else
+      @conversations = latest_messages.select("
+        LEFT(messages.content, 30) AS clipped_message, users.profile_image_url, 
+        CONCAT(users.first_name, ' ', users.last_name) AS name, 
+        messages.created_at AS last_message_sent_at, candidates.user_id AS id
+      ")
     end
 
     render json: @conversations
   end
 
-  # GET /conversations/:id
+  # GET /conversations/:user_id
   def show
     user_id = session[:user_id]
     founder_id = params[:id]
     interlocutor_id = params[:id]
 
-    # get all messages between a candidate and a founder for a conversation
-    # and the founder's company's details
-    @conversation = Message.find_by_sql(["
-      SELECT conversation.messages_data, conversation.company_data FROM (
-        SELECT 
-        json_agg(
-          json_build_object(
-            'id', messages.id,
-            'sender_id', messages.sender_id,
-            'content', messages.content,
-            'sender_first_name', users.first_name,
-            'sender_last_name', users.last_name,
-            'sender_profile_image_url', users.profile_image_url,
-            'sent_at', messages.created_at
-          ) 
-          ORDER BY messages.created_at
-        ) 
-        AS messages_data,
-        json_build_object(
-          'name', MIN(companies.name),
-          'batch', MIN(companies.batch),
-          'website_url', MIN(companies.website_url),
-          'logo_url', MIN(companies.logo_url),
-          'size', MIN(companies.size),
-          'industry', MIN(companies.industry),
-          'location', MIN(companies.location)
-        ) 
-        AS company_data
-        FROM messages
-        INNER JOIN users
-        ON (users.id = messages.sender_id)
-        INNER JOIN founders
-        ON (founders.user_id = :interlocutor_id OR founders.user_id = :user_id)
-        INNER JOIN companies
-        ON companies.id = founders.company_id
-        WHERE 
-        (
-          (messages.sender_id = :user_id AND messages.receiver_id = :interlocutor_id)
-          OR
-          (messages.sender_id = :interlocutor_id AND messages.receiver_id = :user_id)
-        ) 
-      ) conversation
-      ", {
-      :user_id => user_id,
-      :interlocutor_id => interlocutor_id # user_id of person logged in user is talking to
-    }])
+    # sanitize 
+    @interlocutor_id = ActiveRecord::Base.connection.quote(interlocutor_id)
+    @user_id = ActiveRecord::Base.connection.quote(user_id)
 
-    render json: @conversation[0]
+    tables = Message
+      .joins("INNER JOIN users ON (users.id = messages.sender_id)")
+      .joins("INNER JOIN founders ON (founders.user_id = #{@interlocutor_id} OR founders.user_id = #{@user_id})")
+      .joins("INNER JOIN candidates ON (candidates.user_id = #{@interlocutor_id} OR candidates.user_id = #{@user_id})")
+      .joins("INNER JOIN companies ON companies.id = founders.company_id")
+
+    messages = tables
+      .where(sender_id: user_id, receiver_id: interlocutor_id)
+      .or(tables.where(sender_id: interlocutor_id, receiver_id: user_id))
+
+    message_thread = messages.select("
+      messages.id as id, messages.sender_id as sender_id, messages.content as content,
+      users.first_name as sender_first_name, users.last_name as sender_last_name,
+      users.profile_image_url as sender_profile_image_url, messages.created_at as sent_at
+    ").order(:created_at)
+
+    company = messages.select("
+      companies.id, name, batch, website_url, logo_url, size, industry, location
+    ").first
+
+    candidate = messages.select("
+      candidates.id, first_name, last_name, profile_image_url, candidates.status
+    ").first
+
+    @conversations = {
+      :messages_data => message_thread,
+      :company_data => company,
+      :candidate => candidate
+    }
+
+    render json: @conversations
   end
 
   # POST /messages
@@ -175,5 +136,4 @@ class Api::V1::MessagesController < ApplicationController
     def message_params
       params.require(:message).permit(:content, :receiver_id)
     end
-
 end
