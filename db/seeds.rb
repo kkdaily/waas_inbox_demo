@@ -286,5 +286,5 @@ messages = Message.create([
   { sender_id: users[8].id, receiver_id: users[12].id, content: messages_content[12], created_at: 3.days.ago },
   { sender_id: users[9].id, receiver_id: users[12].id, content: messages_content[13], created_at: 9.days.ago },
   { sender_id: users[10].id, receiver_id: users[12].id, content: messages_content[14], created_at: 30.minutes.ago },
-  { sender_id: users[10].id, receiver_id: users[0].id, content: messages_content[15], created_at: 3.hours.ago },
+  { sender_id: users[13].id, receiver_id: users[0].id, content: messages_content[15], created_at: 3.hours.ago },
 ])
