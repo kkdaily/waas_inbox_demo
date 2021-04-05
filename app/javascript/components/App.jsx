@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import Inbox from '../containers/Inbox';
 import PrivateRoute from "./PrivateRoute";
-import SignIn from "./SignIn";
+import SignIn from "../containers/SignIn";
 
 function App() {
   return (
