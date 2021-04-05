@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams } from 'react-router';
 import { getConversation } from '../api/conversations';
