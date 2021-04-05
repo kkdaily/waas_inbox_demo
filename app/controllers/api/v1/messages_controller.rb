@@ -35,8 +35,7 @@ class Api::V1::MessagesController < ApplicationController
     ")
   
     # get all messages where the current user was either the sender or receiver
-    user_messages = tables.where(sender_id: user_id)
-      .or(tables.where(receiver_id: user_id))
+    user_messages = tables.sent_by_user(user_id).or(tables.received_by_user(user_id))
 
     # filter messages by query text
     filtered_messages = user_messages.filter_by_company_name(search)
