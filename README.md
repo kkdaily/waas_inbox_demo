@@ -1,8 +1,14 @@
 # README
 
+<img
+  alt="Screenshot of WaaS inbox demo app on desktop"
+  src="./screenshots/desktop-demo-screenshot.png"
+  width="100%"
+/>
+
 ## About
 
-This is a WIP demo of an inbox web app where job seekers and startup founders can have 1-to-1 conversations with eachother.
+This is a tiny demo of an inbox web app where job seekers and startup founders can have 1-to-1 conversations with eachother.
 
 Features include:
 * Founder and candidate login
@@ -13,8 +19,6 @@ Features include:
 * Mobile responsive layout
 
 ## How to run locally
-
-
 
 ### Prerequisites
 
@@ -28,17 +32,17 @@ You'll need the following dependencies installed on your machine
 ### Configure the database
 Edit `config/database.yml` and update the `username` and `password` under the `default` section with your PostgreSQL user.
 
-Then, create a development and test database for the app by running the following command in your terminal
+Run the following command in your terminal to create a development and test database
 ```
 $ rails db:create
 ```
 
 ### Seeding the database
-First, run the migrations
+Run the migrations
 ```
 $ rails db:migrate
 ```
-Then seed the database with test data
+Seed the database with test data
 ```
 $ rails db:seed
 ```
