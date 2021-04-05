@@ -29,7 +29,18 @@ You'll need the following dependencies installed on your machine
 - [Rails](https://guides.rubyonrails.org/getting_started.html) 6.0.0 or later
 - [PostgreSQL](https://www.postgresql.org/) 10.0 or later
 
-### Install dependencies
+### Installation
+Clone the repository
+```
+$ git clone https://github.com/kkdaily/waas_inbox_demo.git
+```
+
+Cd into the root folder
+```
+$ cd waas_inbox_demo
+```
+
+Install dependencies
 ```
 $ bundle install
 ```
