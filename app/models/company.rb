@@ -8,5 +8,5 @@ class Company < ApplicationRecord
   validates :website_url, length: { minimum: 3, maximum: 63 }
   validates :location, presence: true
   validates :size, presence: true
-  validates :batch, presence: true
+  validates :batch, length: { maximum: 3 }
 end
