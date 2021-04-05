@@ -53,7 +53,6 @@ Run the following command in your terminal to create a development and test data
 $ rails db:create
 ```
 
-### Seeding the database
 Run the migrations
 ```
 $ rails db:migrate
