@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { login } from '../api/auth';
 import { useAuth } from '../hooks/useAuth';
@@ -15,7 +15,16 @@ function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (username.length && password.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [username, password]);
 
   async function loginUser(ev) {
     ev.preventDefault();
@@ -57,7 +66,7 @@ function SignIn() {
             <Spinner className="ml-2" as="span" animation="border" size="md" role="status" aria-hidden="true" />
           </Button>
         ) : (
-          <Button className="signin-btn my-3" size="lg" block onClick={loginUser} variant="orange">
+          <Button className="signin-btn my-3" size="lg" block onClick={loginUser} variant="orange" disabled={isDisabled}>
             Sign in
           </Button>
         )}
