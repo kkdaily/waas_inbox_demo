@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApplicationController
   def create
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
+      login @user
 
       render json: {
         logged_in: true,
@@ -32,7 +32,7 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    logout!
+    logout
     render json: {
       status: 200,
       logged_out: true
@@ -40,14 +40,13 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def show
-    @user = User.find(session[:user_id])
+    @user = current_user
     render json: @user, status: :ok
   end
 
   private
 
-  def session_params
-    params.require(:user).permit(:username, :password)
-  end
-
+    def session_params
+      params.require(:user).permit(:username, :password)
+    end
 end

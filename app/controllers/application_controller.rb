@@ -1,34 +1,15 @@
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
-  helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
 
-  def current_user
-    if session[:user_id]
-      @user = User.find(session[:user_id])
-    end
-  end
-
-  def login!
-    session[:user_id] = @user.id
-  end
-
-  def logged_in?
-    !!session[:user_id]
-  end
-
-  def logout!
-    session.clear
-  end
-
-  def authorized_user?
-    @user == current_user
-  end
+  include SessionsHelper
 
   def authorized
-    render json: {
-      status: 401,
-      errors: ['Unauthorized. Please login.']
-    } unless logged_in?
+    unless logged_in?
+      render json: {
+        status: 401,
+        errors: ['Unauthorized. Please login.']
+      }
+    end
   end
 
 end
