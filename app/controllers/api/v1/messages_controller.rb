@@ -40,6 +40,7 @@ class Api::V1::MessagesController < ApplicationController
     # filter messages by query text
     filtered_messages = user_messages.filter_by_company_name(search)
       .or(user_messages.filter_by_content(search))
+      .or(user_messages.filter_by_user_name(search))
 
     if is_candidate
       # group most recent messages by founder
