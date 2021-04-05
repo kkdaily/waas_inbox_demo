@@ -263,6 +263,8 @@ Hi,
 
 I love what Recurrency is doing, and I would love to help scale out your architecture.
 
+Would we be able to connect sometime this week?
+
 Best,
 George
 "
