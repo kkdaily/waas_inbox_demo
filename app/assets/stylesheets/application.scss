@@ -17,3 +17,11 @@
 @import "bootstrap/scss/bootstrap.scss";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+@import '_colors.scss';
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif !important;
+  font-weight: 200;
+  background-color: $beige !important;
+}
