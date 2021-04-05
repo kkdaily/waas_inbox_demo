@@ -1,20 +1,12 @@
 class Api::V1::MessagesController < ApplicationController
   before_action :authorized
 
-  def is_founder?(user_id)
-    Founder.where(user_id: user_id).exists?
-  end
-
-  def is_candidate?(user_id)
-    Candidate.where(user_id: user_id).exists?
-  end
-
   # GET /conversations
   def index
     user_id = session[:user_id]
     search = params[:search]
     offset = params[:offset]
-    is_candidate = is_candidate?(user_id)
+    is_candidate = User.is_candidate?(user_id)
      
     # get all messages where the current user has sent or received
     tables = Message.joins("
@@ -35,10 +27,13 @@ class Api::V1::MessagesController < ApplicationController
     ")
   
     # get all messages where the current user was either the sender or receiver
-    user_messages = tables.sent_by_user(user_id).or(tables.received_by_user(user_id))
+    user_messages = tables
+      .sent_by_user(user_id)
+      .or(tables.received_by_user(user_id))
 
     # filter messages by query text
-    filtered_messages = user_messages.filter_by_company_name(search)
+    filtered_messages = user_messages
+      .filter_by_company_name(search)
       .or(user_messages.filter_by_content(search))
       .or(user_messages.filter_by_user_name(search))
 
@@ -50,18 +45,20 @@ class Api::V1::MessagesController < ApplicationController
       grouped_messages = filtered_messages.most_recent.group('candidates.user_id')
     end
 
-    latest_messages = tables.where(created_at: grouped_messages.pluck('MAX(messages.created_at)')).order(last_message_sent_at: :desc)
+    latest_messages = tables
+      .where(created_at: grouped_messages.pluck('MAX(messages.created_at)'))
+      .order(last_message_sent_at: :desc)
 
     paginated_messages = latest_messages.limit(10).offset(offset)
     
     if is_candidate
       @conversations = paginated_messages.select("
-        LEFT(messages.content, 30) as clipped_message, companies.logo_url as profile_image_url, 
+        LEFT(messages.content, 130) as clipped_message, companies.logo_url as profile_image_url, 
         companies.name as name, messages.created_at as last_message_sent_at, founders.user_id as id
       ")
     else
       @conversations = paginated_messages.select("
-        LEFT(messages.content, 30) AS clipped_message, users.profile_image_url, 
+        LEFT(messages.content, 130) AS clipped_message, users.profile_image_url, 
         CONCAT(users.first_name, ' ', users.last_name) AS name, 
         messages.created_at AS last_message_sent_at, candidates.user_id AS id
       ")

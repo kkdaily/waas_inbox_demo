@@ -14,4 +14,12 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
   validates :first_name, presence: true, length: { minimum: 1, maximum: 20 }, format: { with: VALID_NAME_REGEX }
   validates :last_name, presence: true, length: { minimum: 1, maximum: 20 }, format: { with: VALID_NAME_REGEX }
+
+  def self.is_founder?(user_id)
+    self.find(user_id).founders.exists?
+  end
+
+  def self.is_candidate?(user_id)
+    self.find(user_id).candidates.exists?
+  end
 end
