@@ -1,5 +1,5 @@
 if Rails.env.production?
-  Rails.application.config.session_store :cookie_store, key: '_waas-inbox-demo', domain: ENV['DOMAIN_URL']
+  Rails.application.config.session_store :cookie_store, key: '_waas-inbox-demo', domain: :all
 else
   Rails.application.config.session_store :cookie_store, key: '_waas-inbox-demo'
 end
