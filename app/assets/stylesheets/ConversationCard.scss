@@ -1,26 +1,23 @@
 @import '_colors.scss';
 
 .ConversationCard {
-  .inbox-card {
-    flex-direction: row;
-    align-items: center;
-    border-radius: 0;
-    border: 0;
-    background-color: $snow;
+  height: 100px;
 
-    img {
-      width: 70px;
+  .sender-header {
+    margin-top: 10px;
+
+    .name {
+      font-weight: bold;
+      color: $black;
     }
+  }
+}
 
-    .header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-
-      .company-name {
-        font-weight: bold;
-        color: $black;
-      }
+@media screen and (min-width: 992px) {
+  .ConversationCard {
+    .content-wrapper {
+      padding-left: 15px;
+      padding-right: 15px;
     }
   }
 }
