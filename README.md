@@ -1,5 +1,3 @@
-# README
-
 <img
   alt="Screenshot of WaaS inbox demo app on desktop"
   src="./screenshots/desktop-demo-screenshot.png"
