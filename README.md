@@ -29,9 +29,23 @@ You'll need the following dependencies installed on your machine
 - [Rails](https://guides.rubyonrails.org/getting_started.html) 6.0.0 or later
 - [PostgreSQL](https://www.postgresql.org/) 10.0 or later
 
-### Install dependencies
+### Installation
+Clone the repository
+```
+$ git clone https://github.com/kkdaily/waas_inbox_demo.git
+```
+
+Navigate to the root folder
+```
+$ cd waas_inbox_demo
+```
+
+Install dependencies
 ```
 $ bundle install
+```
+```
+$ yarn install
 ```
 
 ### Configure the database
@@ -42,7 +56,6 @@ Run the following command in your terminal to create a development and test data
 $ rails db:create
 ```
 
-### Seeding the database
 Run the migrations
 ```
 $ rails db:migrate
