@@ -30,6 +30,7 @@ companies = Company.create([
   { name: 'SafetyWing', logo_url: 'https://bookface-images.s3.amazonaws.com/small_logos/ddb944ea80d22a29ddc64949877063e0dd8d1343.png', website_url: 'https://www.safetywing.com', industry: 'Financial Technology', location: 'San Francisco', size: 20, batch: 'W18' },
   { name: 'ScholarMe', logo_url: 'https://bookface-images.s3.amazonaws.com/small_logos/f9fb7f93f02b6ffe53c14d0421b44bb1722a372f.png', website_url: 'https://www.scholarme.co', industry: 'Financial Technology', location: 'Toronto, Canada', size: 8, batch: 'S19' },
   { name: 'Sketchbox', logo_url: 'https://bookface-images.s3.amazonaws.com/small_logos/2df5faaf3a1b84d44ea388d53291a399c7f6c297.png', website_url: 'https://www.sketchbox3d.com', industry: 'Consumer', location: 'San Francisco', size: 20, batch: 'W18' },
+  { name: 'Pickle', logo_url: 'https://bookface-images.s3.amazonaws.com/small_logos/33799dbde9a7b6ca98e81d00a266631d773790d6.png', website_url: 'https://www.pickleai.com', industry: 'B2B Software', location: 'Salt Lake City, UT', size: 5, batch: 'W21' },
 ])
 
 users = User.create([
@@ -41,10 +42,11 @@ users = User.create([
   { first_name: 'Amrit', last_name: 'Whitworth', username: 'awhitworth', password: 'password', profile_image_url: nil },
   { first_name: 'Tiegan', last_name: 'Bartlett', username: 'tbartlett', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/76.jpg' },
   { first_name: 'Alec', last_name: 'Hudson', username: 'ahudson', password: 'password', profile_image_url: nil },
-  { first_name: 'Polly', last_name: 'Weir', username: 'pweir', password: 'password', profile_image_url: nil },
+  { first_name: 'Polly', last_name: 'Weir', username: 'pweir123', password: 'password', profile_image_url: nil },
   { first_name: 'Meerab', last_name: 'Compton', username: 'mcompton', password: 'password', profile_image_url: nil },
   { first_name: 'Ellen', last_name: 'Chang', username: 'echang', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/90.jpg' },
   { first_name: 'Ioana', last_name: 'Irvine', username: 'iirvine', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/36.jpg' },
+  { first_name: 'Noach', last_name: 'Sahar', username: 'nsahar', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/men/36.jpg' },
 
   # candidates
   { first_name: 'Ruby', last_name: 'Smith', username: 'rsmith', password: 'password', profile_image_url: 'https://randomuser.me/api/portraits/women/47.jpg' },
@@ -52,8 +54,8 @@ users = User.create([
 ])
 
 candidates = Candidate.create([
-  { user_id: users[11].id, status: 'active' },
-  { user_id: users[12].id, status: 'active' }
+  { user_id: users[12].id, status: 'active' },
+  { user_id: users[13].id, status: 'passive' }
 ])
 
 founders = Founder.create([
@@ -68,6 +70,7 @@ founders = Founder.create([
   { user_id: users[8].id, company_id: companies[8].id },
   { user_id: users[9].id, company_id: companies[9].id },
   { user_id: users[10].id, company_id: companies[10].id },
+  { user_id: users[11].id, company_id: companies[11].id },
 ])
 
 messages_content = [
@@ -86,7 +89,12 @@ Mylie Brewer
 
 # message 2
 "
-reply
+Hi Mylie,
+
+Thanks so much for reaching out. I’m available to speak this week on Wednesday and Friday after 1pm EST. Please let me know if you need anything else in the meantime.
+
+Looking forward to discussing the role with you!
+Ruby
 ",
 
 # message 3
@@ -122,7 +130,11 @@ Kristina Jackson
 
 # message 6
 "
-reply
+Hi Ruby,
+
+I came across your profile and thought you might be a fit for some roles we are hiring for and wanted to take a moment to introduce myself and Pickle to you as we are a growing company using technology to disrupt the home security space and are looking for great engineers to join our team.
+
+If you're interested, I’d love to set up a quick call to share a little bit about our company, the roles we are hiring for and learn more about what you’re looking for either now or in the future.
 ",
 
 # message 7
@@ -257,22 +269,22 @@ George
 ]
 
 messages = Message.create([
-  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[0], created_at: 2.days.ago },
-  { sender_id: users[11].id, receiver_id: users[0].id, content: messages_content[1], created_at: 1.day.ago },
-  { sender_id: users[0].id, receiver_id: users[11].id, content: messages_content[2], created_at: 12.seconds.ago },
+  { sender_id: users[0].id, receiver_id: users[12].id, content: messages_content[0], created_at: 2.days.ago },
+  { sender_id: users[12].id, receiver_id: users[0].id, content: messages_content[1], created_at: 12.seconds.ago },
 
-  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[3], created_at: 4.days.ago },
-  { sender_id: users[1].id, receiver_id: users[11].id, content: messages_content[4], created_at: 1.month.ago },
-  { sender_id: users[11].id, receiver_id: users[1].id, content: messages_content[5], created_at: 22.days.ago },
+  { sender_id: users[1].id, receiver_id: users[12].id, content: messages_content[3], created_at: 7.days.ago },
+  { sender_id: users[1].id, receiver_id: users[12].id, content: messages_content[4], created_at: 3.days.ago },
 
-  { sender_id: users[2].id, receiver_id: users[11].id, content: messages_content[6], created_at: 10.days.ago },
-  { sender_id: users[3].id, receiver_id: users[11].id, content: messages_content[7], created_at: 5.minutes.ago },
-  { sender_id: users[4].id, receiver_id: users[11].id, content: messages_content[8], created_at: 4.days.ago },
-  { sender_id: users[5].id, receiver_id: users[11].id, content: messages_content[9], created_at: 7.days.ago },
-  { sender_id: users[6].id, receiver_id: users[11].id, content: messages_content[10], created_at: 1.day.ago },
-  { sender_id: users[7].id, receiver_id: users[11].id, content: messages_content[11], created_at: 2.days.ago },
-  { sender_id: users[8].id, receiver_id: users[11].id, content: messages_content[12], created_at: 3.days.ago },
-  { sender_id: users[9].id, receiver_id: users[11].id, content: messages_content[13], created_at: 9.days.ago },
-  { sender_id: users[10].id, receiver_id: users[11].id, content: messages_content[14], created_at: 30.minutes.ago },
-  { sender_id: users[12].id, receiver_id: users[0].id, content: messages_content[15], created_at: 3.hours.ago },
+  { sender_id: users[11].id, receiver_id: users[12].id, content: messages_content[5], created_at: 6.days.ago },
+
+  { sender_id: users[2].id, receiver_id: users[12].id, content: messages_content[6], created_at: 10.days.ago },
+  { sender_id: users[3].id, receiver_id: users[12].id, content: messages_content[7], created_at: 5.minutes.ago },
+  { sender_id: users[4].id, receiver_id: users[12].id, content: messages_content[8], created_at: 4.days.ago },
+  { sender_id: users[5].id, receiver_id: users[12].id, content: messages_content[9], created_at: 7.days.ago },
+  { sender_id: users[6].id, receiver_id: users[12].id, content: messages_content[10], created_at: 1.month.ago },
+  { sender_id: users[7].id, receiver_id: users[12].id, content: messages_content[11], created_at: 21.days.ago },
+  { sender_id: users[8].id, receiver_id: users[12].id, content: messages_content[12], created_at: 3.days.ago },
+  { sender_id: users[9].id, receiver_id: users[12].id, content: messages_content[13], created_at: 9.days.ago },
+  { sender_id: users[10].id, receiver_id: users[12].id, content: messages_content[14], created_at: 30.minutes.ago },
+  { sender_id: users[10].id, receiver_id: users[0].id, content: messages_content[15], created_at: 3.hours.ago },
 ])
