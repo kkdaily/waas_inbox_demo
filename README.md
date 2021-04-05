@@ -35,7 +35,7 @@ Clone the repository
 $ git clone https://github.com/kkdaily/waas_inbox_demo.git
 ```
 
-Cd into the root folder
+Navigate to the root folder
 ```
 $ cd waas_inbox_demo
 ```
