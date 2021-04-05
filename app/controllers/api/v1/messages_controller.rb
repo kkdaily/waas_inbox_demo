@@ -50,21 +50,17 @@ class Api::V1::MessagesController < ApplicationController
       grouped_messages = filtered_messages.most_recent.group('candidates.user_id')
     end
 
-    # get 10 messages at a time starting at offset
-    paginated_messages = grouped_messages.limit(10).offset(offset)
+    latest_messages = tables.where(created_at: grouped_messages.pluck('MAX(messages.created_at)')).order(last_message_sent_at: :desc)
 
-    # get most recent message for each conversation between the current user and the founder
-    latest_messages = tables.where(created_at: paginated_messages
-      .pluck('MAX(messages.created_at)'))
-      .order(last_message_sent_at: :desc)
+    paginated_messages = latest_messages.limit(10).offset(offset)
     
     if is_candidate
-      @conversations = latest_messages.select("
+      @conversations = paginated_messages.select("
         LEFT(messages.content, 30) as clipped_message, companies.logo_url as profile_image_url, 
         companies.name as name, messages.created_at as last_message_sent_at, founders.user_id as id
       ")
     else
-      @conversations = latest_messages.select("
+      @conversations = paginated_messages.select("
         LEFT(messages.content, 30) AS clipped_message, users.profile_image_url, 
         CONCAT(users.first_name, ' ', users.last_name) AS name, 
         messages.created_at AS last_message_sent_at, candidates.user_id AS id
