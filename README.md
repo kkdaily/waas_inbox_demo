@@ -44,6 +44,9 @@ Install dependencies
 ```
 $ bundle install
 ```
+```
+$ yarn install
+```
 
 ### Configure the database
 Edit `config/database.yml` and update the `username` and `password` under the `default` section with your PostgreSQL user.
