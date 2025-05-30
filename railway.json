@@ -1,0 +1,18 @@
+{
+  "build": {
+    "env": {
+      "RAILS_ENV": "production",
+      "NODE_ENV": "production"
+    },
+    "commands": {
+      "prebuild": "yarn install && bundle install",
+      "build": "RAILS_ENV=production bundle exec rails assets:precompile"
+    }
+  },
+  "deploy": {
+    "cmd": "bundle exec rails db:prepare"
+  },
+  "start": {
+    "cmd": "bundle exec puma -C config/puma.rb"
+  }
+}
