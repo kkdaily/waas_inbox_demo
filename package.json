@@ -21,6 +21,9 @@
     "react-router-dom": "^5.2.0",
     "turbolinks": "^5.2.0"
   },
+  "resolutions": {
+    "node-sass": "npm:sass"
+  },
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.11.2"
